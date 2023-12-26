@@ -19,12 +19,7 @@ pipeline {
                     sh 'git config user.name "CharlesTamizharasan"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
-                    // Read the content of test.txt
-                    def content = readFile('test.txt').trim()
-                    // Update the USERNAME line in the content
-                    content = content.replaceAll(/^USERNAME=.*/, "USERNAME=${params.USERNAME}")
-                    // Write the updated content back to test.txt
-                    writeFile file: 'test.txt', text: content
+                    sh "sed -i ':a;N;\$!ba;s/\\n/\\|\\#\\|/g' test.txt"
                     sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
