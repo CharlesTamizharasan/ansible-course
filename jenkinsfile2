@@ -23,8 +23,10 @@ pipeline {
                     def content = readFile('test.txt').trim()
                     // Update the USERNAME line in the content
                     content = content.replaceAll(/^USERNAME=.*/, "USERNAME=${params.USERNAME}")
-                    // Write the updated content back to test.txt
-                    writeFile file: 'test.txt', text: content
+                    // Write the updated content to a temporary file
+                    def tempFile = writeFile file: 'test_temp.txt', text: content
+                    // Use sed to replace the original file with the temporary file
+                    sh "sed -i '' -e 's|^USERNAME=.*|USERNAME=${params.USERNAME}|' ${tempFile}"
                     sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
