@@ -40,16 +40,18 @@ pipeline {
                     def encodedContent = updatedContent.bytes.encodeBase64().toString()
                     echo "Encoded Content: ${encodedContent}"
 
-                    // Update the file on GitHub
+                  // Update the file on GitHub
                     sh """
                         curl -s -X PUT \
                             -H 'Authorization: token ${env.GITHUB_TOKEN}' \
                             -H 'Content-Type: application/json' \
-                            -d '{
+                            -d '''
+                                {   
                                 "message": "Update text file",
                                 "content": "${encodedContent}",
                                 "sha": "$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)"
-                            }' \
+                                }
+                               '''
                             ${apiUrl}
                     """
                 }
@@ -57,3 +59,4 @@ pipeline {
         }
     }
 }
+
