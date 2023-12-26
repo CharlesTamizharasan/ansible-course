@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        GITHUB_TOKEN = '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'
+        GITHUB_TOKEN = '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'
         GITHUB_REPO = 'CharlesTamizharasan/ansible-course.git'
         FILE_PATH = 'test'
         JSON_FILE = 'update.json'
