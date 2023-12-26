@@ -35,5 +35,19 @@ pipeline {
                 }
             }
         }
+        stage('Write File') {
+            steps {
+                script {
+                    def filePath = "terraform/test2.txt"
+                    def fileContent = "This is the content to write."
+
+                    // Use the writeFile step to write content to the file
+                    writeFile file: filePath, text: fileContent
+
+                    echo "File has been written:"
+                    sh "cat ${filePath}"
+                }
+            }
+        }
     }
 }
