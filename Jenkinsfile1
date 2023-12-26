@@ -40,7 +40,7 @@ stage('Create JSON File') {
                     writeFile file: "${env.JSON_FILE}", text: """
                     {
                         'message': 'Update text file',
-                        'content': '${updatedContent}',
+                        "content": "${updatedContent.replaceAll('\n', '\\n')}",
                         'sha': '${shaValue}'
                     }
                     """
