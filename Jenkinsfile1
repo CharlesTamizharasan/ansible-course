@@ -24,46 +24,47 @@ pipeline {
             }
         }
 
-stage('Create JSON File') {
-            steps {
-                script {
-                    def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
-                    def existingContent = sh(script: "curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .content | base64 -d", returnStdout: true).trim()
+stages {
+    stage('Create JSON File') {
+      steps {
+        script {
+          def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
+          def existingContent = sh(script: "curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .content | base64 -d", returnStdout: true).trim()
 
-                    // Append the new username to the existing content
-                    def updatedContent = existingContent + "\\n${params.USERNAME_TO_ADD}"
+          // Append the new username to the existing content
+          def updatedContent = existingContent + "\\n${params.USERNAME_TO_ADD}"
 
-                    // Get the SHA value separately
-                    def shaValue = sh(script: "curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha", returnStdout: true).trim()
+          // Recalculate SHA value after content modification
+          def shaValue = sh(script: "echo -n '${updatedContent}' | shasum -a 256 | awk '{print \$1}'", returnStdout: true).trim()
 
-                    // Create a JSON file with the update content and SHA value
-                    writeFile file: "${env.JSON_FILE}", text: """
-                    {
-                        'message': 'Update text file',
-                        "content": "${updatedContent.replaceAll('\n', '\\n').replaceAll('"', '\\\\\"')}",
-                        'sha': '${shaValue}'
-                    }
-                    """
-                }
-            }
+          // Create the JSON file with the updated SHA value
+          writeFile file: "${env.JSON_FILE}", text: """
+          {
+            'message': 'Update text file',
+            "content": "${updatedContent.replaceAll('\n', '\\n').replaceAll('"', '\\\\\"')}",
+            'sha': '${shaValue}'
+          }
+          """
         }
-
-        stage('Update GitHub File') {
-            steps {
-                script {
-                    sh "cat ${env.JSON_FILE}"
-                    def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
-
-                    // Update the file on GitHub using the JSON file
-                    sh """
-                        curl -s -X PUT \
-                            -H 'Authorization: token ${env.GITHUB_TOKEN}' \
-                            -H 'Content-Type: application/json' \
-                            --data @${env.JSON_FILE} \
-                            ${apiUrl}
-                    """
-                }
-            }
-        }
+      }
     }
+
+    stage('Update GitHub File') {
+      steps {
+        script {
+          sh "cat ${env.JSON_FILE}"
+          def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
+
+          // Update the file on GitHub using the JSON file
+          sh """
+            curl -s -X PUT \
+              -H 'Authorization: token ${env.GITHUB_TOKEN}' \
+              -H 'Content-Type: application/json' \
+              --data @${env.JSON_FILE} \
+              ${apiUrl}
+          """
+        }
+      }
+    }
+  }
 }
