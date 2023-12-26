@@ -31,7 +31,7 @@ pipeline {
                             -H 'Content-Type: application/json' \
                             -d '{
                                 "message": "Update text file",
-                                "content": "${encodedContent}",
+                                "content": '''${encodedContent}''',
                                 "sha": "$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)"
                             }' \
                             ${apiUrl}
