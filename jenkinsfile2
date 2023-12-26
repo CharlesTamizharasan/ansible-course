@@ -19,12 +19,21 @@ pipeline {
                     sh 'git config user.name "CharlesTamizharasan"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
-                    sh 'terraform/test1.txt'
-                    sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
                     sh 'git commit -m "Update test.txt with username ${params.USERNAME}"'
                     sh 'git push origin main'
+                }
+            }
+        }
+    }
+   stages {
+        stage('Read File') {
+            steps {
+                script {
+                    def filePath = "terraform/test1.txt"
+                    def fileContent = sh(script: "cat ${filePath}", returnStdout: true).trim()
+                    echo "File Content:\n${fileContent}"
                 }
             }
         }
