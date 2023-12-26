@@ -12,7 +12,7 @@ pipeline {
         JSON_FILE = 'update.json'
     }
 
-      stages {
+   stages {
         stage('Debug') {
             steps {
                 script {
@@ -34,14 +34,14 @@ pipeline {
                     def updatedContent = existingContent + "\\n${params.USERNAME_TO_ADD}"
 
                     // Create a JSON file with the update content
-                    writeFile file: "${env.JSON_FILE}", text: """{
+                    writeFile file: "${env.JSON_FILE}", text: """
                         {
                             "message": "Update text file",
-                            "content": "",
-                            "sha": "$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)"
-                        }"""
-                        // Append the updated content to the JSON file
-                        echo "\"${updatedContent}\"" >> ${env.JSON_FILE}
+                            "content": "${updatedContent}",
+                            "sha": ""
+
+                        }
+                        """
                 }
             }
         }
@@ -50,6 +50,8 @@ pipeline {
             steps {
                 script {
                     def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
+                    // Append the actual SHA value to the JSON file
+                    sh "echo \"\\\"sha\\\": \\\"$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)\\\"\" >> ${env.JSON_FILE}"
 
                     // Update the file on GitHub using the JSON file
                     sh """
