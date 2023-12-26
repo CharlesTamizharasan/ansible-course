@@ -9,10 +9,10 @@ pipeline {
         GITHUB_TOKEN = credentials('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')
         GITHUB_REPO = 'CharlesTamizharasan/ansible-course.git'
         FILE_PATH = 'test'
-                JSON_FILE = 'update.json'
+        JSON_FILE = 'update.json'
     }
 
-    stages {
+      stages {
         stage('Debug') {
             steps {
                 script {
@@ -34,13 +34,14 @@ pipeline {
                     def updatedContent = existingContent + "\\n${params.USERNAME_TO_ADD}"
 
                     // Create a JSON file with the update content
-                    writeFile file: "${env.JSON_FILE}", text: """
+                    writeFile file: "${env.JSON_FILE}", text: """{
                         {
                             "message": "Update text file",
-                            "content": "${updatedContent}",
+                            "content": "",
                             "sha": "$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)"
-                        }
-                    """
+                        }"""
+                        // Append the updated content to the JSON file
+                        echo "\"${updatedContent}\"" >> ${env.JSON_FILE}
                 }
             }
         }
@@ -62,3 +63,4 @@ pipeline {
             }
         }
     }
+}
