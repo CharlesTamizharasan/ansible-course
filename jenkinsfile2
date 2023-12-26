@@ -19,7 +19,7 @@ pipeline {
                     sh 'git config user.name "CharlesTamizharasan"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
-                    sh 'terraform/main.tf'
+                    sh 'terraform/test1.txt'
                     sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
