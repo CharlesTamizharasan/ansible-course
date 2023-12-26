@@ -9,9 +9,10 @@ pipeline {
         GITHUB_TOKEN = credentials('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')
         GITHUB_REPO = 'CharlesTamizharasan/ansible-course.git'
         FILE_PATH = 'test'
+                JSON_FILE = 'update.json'
     }
 
-  stages {
+    stages {
         stage('Debug') {
             steps {
                 script {
@@ -22,41 +23,42 @@ pipeline {
                 }
             }
         }
-        stage('Update GitHub File') {
+
+        stage('Create JSON File') {
             steps {
                 script {
                     def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
-                    echo "API URL: ${apiUrl}"
-
                     def existingContent = sh(script: "curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .content | base64 -d", returnStdout: true).trim()
-                    echo "Existing Content: ${existingContent}"
 
                     // Append the new username to the existing content
-                    def updatedContent = existingContent + "\n${params.USERNAME_TO_ADD}"
-                    echo "Updated Content: ${updatedContent}"
+                    def updatedContent = existingContent + "\\n${params.USERNAME_TO_ADD}"
 
+                    // Create a JSON file with the update content
+                    writeFile file: "${env.JSON_FILE}", text: """
+                        {
+                            "message": "Update text file",
+                            "content": "${updatedContent}",
+                            "sha": "$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)"
+                        }
+                    """
+                }
+            }
+        }
+        
+         stage('Update GitHub File') {
+            steps {
+                script {
+                    def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
 
-                    // Encode the updated content to base64
-                    def encodedContent = updatedContent.bytes.encodeBase64().toString()
-                    echo "Encoded Content: ${encodedContent}"
-
-                  // Update the file on GitHub
+                    // Update the file on GitHub using the JSON file
                     sh """
                         curl -s -X PUT \
                             -H 'Authorization: token ${env.GITHUB_TOKEN}' \
                             -H 'Content-Type: application/json' \
-                            -d '''
-                                {   
-                                "message": "Update text file",
-                                "content": "${encodedContent}",
-                                "sha": "$(curl -s -H 'Authorization: token ${env.GITHUB_TOKEN}' ${apiUrl} | jq -r .sha)"
-                                }
-                               '''
+                            --data @${env.JSON_FILE} \
                             ${apiUrl}
                     """
                 }
             }
         }
     }
-}
-
