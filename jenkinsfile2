@@ -16,7 +16,7 @@ pipeline {
                 script {
                     git branch: 'jcloud-dev', url: 'https://github.com/CharlesTamizharasan/ansible-course.git'
                     // Set Git user details
-                    sh 'git config user.name "CharlesTamizharasan"'
+                    sh 'git config user.name "Charlest"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
                     // Git operations
