@@ -21,7 +21,7 @@ pipeline {
                     sh 'cat test.txt'
                     echo "Executing sed command:"
                     echo "sed -i \"\" \"s/^USERNAME=.*/USERNAME=${params.USERNAME}/\" test.txt"
-                    sh 'sed -i "" "s/^USERNAME=.*/USERNAME=${params.USERNAME}/" test.txt'
+                    sh 'sed -i "" '\''s/^USERNAME=.*/USERNAME=${params.USERNAME}/'\'' test.txt'
                     sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
