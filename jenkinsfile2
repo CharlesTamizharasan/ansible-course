@@ -15,7 +15,8 @@ pipeline {
             steps {
                 script {
                     git branch: 'jcloud-dev', url: 'https://github.com/CharlesTamizharasan/ansible-course.git'
-                    sh "sed -i '' 's/^USERNAME=.*/USERNAME=<span class="math-inline">\{params\.USERNAME\}/' test\.txt"
+                    #sh "sed -i '' 's/^USERNAME=.*/USERNAME=<span class="math-inline">\{params\.USERNAME\}/' test\.txt"
+                    sh "sed -i '' 's/^USERNAME=.*/USERNAME=${params.USERNAME}/' test.txt"
                     git add test.txt
                     git commit -m "Update test.txt with username ${params.USERNAME}"
                     git push origin main
