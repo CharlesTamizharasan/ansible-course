@@ -26,8 +26,6 @@ pipeline {
                 }
             }
         }
-    }
-   stages {
         stage('Read File') {
             steps {
                 script {
