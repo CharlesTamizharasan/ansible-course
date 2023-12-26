@@ -39,9 +39,9 @@ stage('Create JSON File') {
                     // Create a JSON file with the update content and SHA value
                     writeFile file: "${env.JSON_FILE}", text: """
                     {
-                        "message": "Update text file",
-                        "content": '${updatedContent}',
-                        "sha": '${shaValue}'
+                        'message': 'Update text file',
+                        'content': '${updatedContent}',
+                        'sha': '${shaValue}'
                     }
                     """
                 }
