@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+ parameters {
+        string(name: 'USERNAME_TO_ADD', defaultValue: '', description: 'Enter the username to add to text file')
+    }
+
     stages {
         stage('Checkout') {
             steps {
