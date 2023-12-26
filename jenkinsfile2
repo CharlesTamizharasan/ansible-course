@@ -21,7 +21,7 @@ pipeline {
                     sh 'cat test.txt'
                     // Git operations
                     //sh 'git add .'
-                    //sh 'git commit -m "Update test.txt with username ${params.USERNAME}"'
+                    //sh 'git commit -m "Updated"'
                     //sh 'git push origin main'
                 }
             }
