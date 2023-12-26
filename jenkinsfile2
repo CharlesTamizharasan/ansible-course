@@ -15,6 +15,9 @@ pipeline {
             steps {
                 script {
                     git branch: 'jcloud-dev', url: 'https://github.com/CharlesTamizharasan/ansible-course.git'
+                    // Set Git user details
+                    sh 'git config user.name "CharlesTamizharasan"'
+                    sh 'git config user.email "charlesit24@gmail.com"'
                     sh "sed -i '' \"s/^USERNAME=.*/USERNAME=${params.USERNAME}/\" test.txt"
                     git add test.txt
                     git commit -m "Update test.txt with username ${params.USERNAME}"
