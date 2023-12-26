@@ -46,6 +46,10 @@ pipeline {
 
                     echo "File has been written:"
                     sh "cat ${filePath}"
+                    // Git operations
+                    sh 'git add .'
+                    sh 'git commit -m "Update test.txt with username ${params.USERNAME}"'
+                    sh 'git push origin main'
                 }
             }
         }
