@@ -51,6 +51,7 @@ stage('Create JSON File') {
         stage('Update GitHub File') {
             steps {
                 script {
+                    sh "cat ${env.JSON_FILE}"
                     def apiUrl = "https://api.github.com/repos/${env.GITHUB_REPO}/contents/${env.FILE_PATH}"
 
                     // Update the file on GitHub using the JSON file
