@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'USERNAME', defaultValue: '', description: 'Enter the username to update in test.txt')
+    }
+
+    environment {
+        GITHUB_TOKEN = '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'
+        GITHUB_REPO = 'CharlesTamizharasan/ansible-course.git'
+    }
+
+    stages {
+        stage('Update GitHub Repo') {
+            steps {
+                script {
+                    git branch: 'main', url: 'https://github.com/CharlesTamizharasan/ansible-course.git'
+                    sh "sed -i 's/^USERNAME=.*/USERNAME=${params.USERNAME}/' test.txt"
+                    git add test.txt
+                    git commit -m "Update test.txt with username ${params.USERNAME}"
+                    git push origin main
+                }
+            }
+        }
+    }
+}
