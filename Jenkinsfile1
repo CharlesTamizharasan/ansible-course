@@ -23,8 +23,6 @@ pipeline {
                 }
             }
         }
-
-stages {
     stage('Create JSON File') {
       steps {
         script {
@@ -67,5 +65,4 @@ stages {
       }
     }
   }
-}
 }
