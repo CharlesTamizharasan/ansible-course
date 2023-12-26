@@ -19,7 +19,7 @@ pipeline {
                     sh 'git config user.name "CharlesTamizharasan"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
-                    sh "sed -i ':a;N;\$!ba;s/\\n/\\|\\#\\|/g' test.txt"
+                    sh "sed -i ':a;N;\$!ba;s/\\n/\\|\\#\\|/g' ttest.txt"
                     sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
