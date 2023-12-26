@@ -39,11 +39,10 @@ pipeline {
             steps {
                 script {
                     def filePath = "terraform/test2.txt"
-                    def fileContent = "This is the content to write line1 $USERNAME 
-  topic_name         = $USERNAME
-  line2 
-  line3 
-  line5"
+                    def fileContent = "This is the content to write line1 $USERNAME
+                                        \n topic_name         = $USERNAME
+                                        \n line2 
+                                         \n line3"
 
                     // Use the writeFile step to write content to the file
                     writeFile file: filePath, text: fileContent
