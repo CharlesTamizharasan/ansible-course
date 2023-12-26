@@ -19,9 +19,10 @@ pipeline {
                     sh 'git config user.name "CharlesTamizharasan"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
-                    echo "Executing sed command:"
-                    echo "sed -i \"\" \"s/^USERNAME=.*/USERNAME=${params.USERNAME}/\" test.txt"
-                    sh 'sed -i "" "s|^USERNAME=.*|USERNAME=${params.USERNAME}|" test.txt'
+                    // Use script block for sed command
+                    script {
+                    sh 'sed -i "" "s/^USERNAME=.*/USERNAME=${params.USERNAME}/" test.txt'
+                    }
                     sh 'cat test.txt'
                     // Git operations
                     sh 'git add .'
