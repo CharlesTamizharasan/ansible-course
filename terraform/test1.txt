@@ -1,1 +1,11 @@
 test
+ - username: tchar
+    comment: Dtcha
+    group: cor-en
+    groups: engine
+    homedir: /home/tchar
+    email_address: dnagh@gmail.com
+    shell: /bin/zsh
+    ssh_public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDhsa67+FlsGWbUG0tNtFLVtOuJSOtNwAVtfDQhE9v/hKia9P77KoQ1kb1cV9655rKZFeYHQtXOhIkoZvlW3I6DajPRrZgtUo971g3auouS83g0UmfXiMQexrT/XQG3k6bcjg5gemtzBgVYU9gd8EJXGSaCht3SkPHtSOXGGMjvv0GUqdgbwhjtdEa9utpnfeH1MySSQ70wjENMcp5YNl3aJZc3sMhe/D0VVR21p3DeGdICzoVBmf0RL2NKuUd0ICXBqBV149sg+wslQNaGe3TPxOQQKgLkihLr7f95SwxvwoWBiNlC0v3dW+AC0YSi5b8s= -mbp
+    k8s_access: true
+    elevated_k8s_access: true
