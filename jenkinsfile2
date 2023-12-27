@@ -39,8 +39,16 @@ pipeline {
             steps {
                 script {
                     def filePath = "terraform/test2.txt"
-                    def fileContent = "This is the content to write line1 $USERNAME \n" +
-                                        "this is second line"
+                    def fileContent =  "- username: $USERNAME\n" +
+                                          "comment: $USERNAME\n" +
+                                          "group: core-eng\n" +
+                                          "groups: engineering\n" +
+                                          "homedir: /home/$USERNAME\n" +
+                                          "email_address: $USERNAME@juniper.net\n" +
+                                          "shell: /bin/zsh\n" +
+                                          "ssh_public_key: $USERNAME\n" +
+                                          "k8s_access: true\n" +
+                                          "elevated_k8s_access: true"
 
                     // Use the writeFile step to write content to the file
                     writeFile file: filePath, text: fileContent
