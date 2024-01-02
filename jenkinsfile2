@@ -20,7 +20,7 @@ pipeline {
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
                     // Create a new branch with a descriptive name
-                    def featureBranch = "feature-branch-${currentBuild.number}
+                    def featureBranch = "feature-branch
                     checkout scm
                     sh "git checkout -b ${featureBranch}"
                     // Git operations
