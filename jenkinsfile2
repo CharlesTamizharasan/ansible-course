@@ -40,14 +40,14 @@ pipeline {
             steps {
                 script {
                     def filePath = "terraform/test2.txt"
-                    def fileContent =  "- username: $USER_ID\n" +
-                                          "comment: $USER_ID\n" +
+                    def fileContent =  "- username: ${params.USER_ID}\n" +
+                                          "comment: ${params.USER_ID}\n" +
                                           "group: core-eng\n" +
                                           "groups: engineering\n" +
-                                          "homedir: /home/$USER_ID\n" +
-                                          "email_address: $USER_ID@juniper.net\n" +
+                                          "homedir: /home/${params.USER_ID}\n" +
+                                          "email_address: ${params.USER_ID}@juniper.net\n" +
                                           "shell: /bin/zsh\n" +
-                                          "ssh_public_key: $SSH_KEY\n" +
+                                          "ssh_public_key: ${params.SSH_KEY}\n" +
                                           "k8s_access: true\n" +
                                           "elevated_k8s_access: true"
 
