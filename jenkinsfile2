@@ -47,7 +47,7 @@ pipeline {
                                           "homedir: /home/$USER_ID\n" +
                                           "email_address: $USER_ID@juniper.net\n" +
                                           "shell: /bin/zsh\n" +
-                                          "ssh_public_key: $USER_ID\n" +
+                                          "ssh_public_key: $SSH_KEY\n" +
                                           "k8s_access: true\n" +
                                           "elevated_k8s_access: true"
 
