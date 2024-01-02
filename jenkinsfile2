@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'USERNAME', defaultValue: '', description: 'Enter the username to update in test.txt')
+        string(name: 'USERID', defaultValue: '', description: 'Enter the username to update in test.txt')
+        string(name: 'SSH-KEY', defaultValue: '', description: 'Enter the ssh to update in test.txt')
     }
 
     environment {
@@ -39,14 +40,14 @@ pipeline {
             steps {
                 script {
                     def filePath = "terraform/test2.txt"
-                    def fileContent =  "- username: $USERNAME\n" +
-                                          "comment: $USERNAME\n" +
+                    def fileContent =  "- username: $USERID\n" +
+                                          "comment: $USERID\n" +
                                           "group: core-eng\n" +
                                           "groups: engineering\n" +
-                                          "homedir: /home/$USERNAME\n" +
-                                          "email_address: $USERNAME@juniper.net\n" +
+                                          "homedir: /home/$USERID\n" +
+                                          "email_address: $USERID@juniper.net\n" +
                                           "shell: /bin/zsh\n" +
-                                          "ssh_public_key: $USERNAME\n" +
+                                          "ssh_public_key: $SSH-KEY\n" +
                                           "k8s_access: true\n" +
                                           "elevated_k8s_access: true"
 
