@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'USERID', defaultValue: '', description: 'Enter the username to update in test.txt')
-        string(name: 'SSH-KEY', defaultValue: '', description: 'Enter the ssh to update in test.txt')
+        string(name: 'USER_ID', defaultValue: '', description: 'Enter the username to update in test.txt')
+        string(name: 'SSH_KEY', defaultValue: '', description: 'Enter the ssh to update in test.txt')
     }
 
     environment {
