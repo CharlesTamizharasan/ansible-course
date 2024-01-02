@@ -15,12 +15,14 @@ pipeline {
             steps {
                 script {
                     git branch: 'jcloud-dev', url: 'https://github.com/CharlesTamizharasan/ansible-course.git'
-                    // Create a new branch with a descriptive name
-                    - git checkout -b feature-branch-${CI_PIPELINE_ID}
                     // Set Git user details
                     sh 'git config user.name "Charles"'
                     sh 'git config user.email "charlesit24@gmail.com"'
                     sh 'cat test.txt'
+                    // Create a new branch with a descriptive name
+                    def featureBranch = "feature-branch-${currentBuild.number}
+                    checkout scm
+                    sh "git checkout -b ${featureBranch}"
                     // Git operations
                     //sh 'git add .'
                     //sh 'git commit -m "Updated"'
