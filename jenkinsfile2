@@ -16,7 +16,7 @@ pipeline {
                 script {
                     git branch: 'jcloud-dev', url: 'https://github.com/CharlesTamizharasan/ansible-course.git'
                     // Create a new branch with a descriptive name
-                    sh 'git checkout -b feature-branch-${currentBuild.number}'
+                    - git checkout -b feature-branch-${CI_PIPELINE_ID}
                     // Set Git user details
                     sh 'git config user.name "Charles"'
                     sh 'git config user.email "charlesit24@gmail.com"'
